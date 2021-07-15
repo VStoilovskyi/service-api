@@ -83,11 +83,11 @@ class ProjectInfoWidgetDataConverterTest {
 				InfoInterval.ONE_MONTH
 		);
 
-		assertEquals("42.8", investigatedProjectInfo.get(yesterdayString).get(0).getValues().get("toInvestigate"));
-		assertEquals("57.2", investigatedProjectInfo.get(yesterdayString).get(0).getValues().get("investigated"));
+		assertEquals(42.86, Double.valueOf(investigatedProjectInfo.get(yesterdayString).get(0).getValues().get("toInvestigate")));
+		assertEquals(57.14, Double.valueOf(investigatedProjectInfo.get(yesterdayString).get(0).getValues().get("investigated")));
 
-		assertEquals("50.0", investigatedProjectInfo.get(todayString).get(0).getValues().get("toInvestigate"));
-		assertEquals("50.0", investigatedProjectInfo.get(todayString).get(0).getValues().get("investigated"));
+		assertEquals(50.0, Double.valueOf(investigatedProjectInfo.get(todayString).get(0).getValues().get("toInvestigate")));
+		assertEquals(50.0, Double.valueOf(investigatedProjectInfo.get(todayString).get(0).getValues().get("investigated")));
 	}
 
 	@Test
@@ -111,9 +111,9 @@ class ProjectInfoWidgetDataConverterTest {
 	void getTestCasesStatisticsProjectInfo() {
 		Map<String, List<ChartObject>> testCasesStatisticsProjectInfo = converter.getTestCasesStatisticsProjectInfo(getTestData());
 
-		assertEquals("20.0", testCasesStatisticsProjectInfo.get("test_launch").get(0).getValues().get("min"));
-		assertEquals("22.0", testCasesStatisticsProjectInfo.get("test_launch").get(0).getValues().get("avg"));
-		assertEquals("24.0", testCasesStatisticsProjectInfo.get("test_launch").get(0).getValues().get("max"));
+		assertEquals(20.0, Double.valueOf(testCasesStatisticsProjectInfo.get("test_launch").get(0).getValues().get("min")));
+		assertEquals(22.0, Double.valueOf(testCasesStatisticsProjectInfo.get("test_launch").get(0).getValues().get("avg")));
+		assertEquals(24.0, Double.valueOf(testCasesStatisticsProjectInfo.get("test_launch").get(0).getValues().get("max")));
 	}
 
 	@Test

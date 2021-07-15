@@ -109,7 +109,7 @@ values (2, 'statistics$executions$total'),
        (6, 'statistics$executions$untested'),
        (7, 'statistics$executions$total'),
        (7, 'statistics$executions$passed'),
-       (7, 'statistics$executions$failed');
+       (7, 'statistics$executions$failed'),
        (7, 'statistics$executions$untested');
 
 insert into widget_filter(widget_id, filter_id)
