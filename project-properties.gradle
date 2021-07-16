@@ -51,6 +51,7 @@ project.ext {
             (migrationsUrl + '/migrations/43_attachment_for_deletion_table.up.sql')      : 'V033__attachment_for_deletion_table.sql',
             (migrationsUrl + '/migrations/44_remove_triggers.up.sql')                    : 'V034__remove_triggers.sql',
             (migrationsUrl + '/migrations/48_untested_status.up.sql')                    : 'V035__untested_status.sql',
+            (migrationsUrl + '/migrations/49_untested_status_functions_update.up.sql')   : 'V036__untested_status_functions.sql',
     ]
     excludeTests = ['**/entity/**',
                     '**/aop/**',
