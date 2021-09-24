@@ -27,6 +27,10 @@ public class SuiteWithNestedStepsGenerator extends DefaultSuiteGenerator {
 	@Override
 	protected String startTest(String suiteId, RootMetaData rootMetaData, Test test, StatusEnum testStatus) {
 		final String testId = super.startTest(suiteId, rootMetaData, test, testStatus);
+		return startStepParent(rootMetaData, test, testStatus, testId);
+	}
+
+	private String startStepParent(RootMetaData rootMetaData, Test test, StatusEnum testStatus, String testId) {
 		final DemoItemMetadata stepParentMetadata = getMetadata(test.getName(), STEP, testStatus, testId);
 		return demoDataTestItemService.startTestItem(stepParentMetadata, rootMetaData);
 	}
