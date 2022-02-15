@@ -299,8 +299,8 @@ public class AsyncReportingListener implements MessageListener {
 		Log log = new LogBuilder().addSaveLogRq(request).addTestItem(item).addProjectId(projectId).get();
 		log.setId(logRepository.getNextId());
 
-		runAsync(() -> logRepository.save(log), taskExecutor);
-		runAsync(() -> logService.saveLogMessageToElasticSearch(log), taskExecutor);
+		logRepository.save(log);
+		logService.saveLogMessageToElasticSearch(log);
 
 		Launch effectiveLaunch = testItemService.getEffectiveLaunch(item);
 		saveAttachment(metaInfo,
@@ -317,8 +317,8 @@ public class AsyncReportingListener implements MessageListener {
 		Log log = new LogBuilder().addSaveLogRq(request).addLaunch(launch).addProjectId(projectId).get();
 		log.setId(logRepository.getNextId());
 
-		runAsync(() -> logRepository.save(log), taskExecutor);
-		runAsync(() -> logService.saveLogMessageToElasticSearch(log), taskExecutor);
+		logRepository.save(log);
+		logService.saveLogMessageToElasticSearch(log);
 
 		saveAttachment(metaInfo, log.getId(), projectId, launch.getId(), null, launch.getUuid(), log.getUuid());
 	}

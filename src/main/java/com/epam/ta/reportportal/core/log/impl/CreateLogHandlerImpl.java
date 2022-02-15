@@ -106,8 +106,8 @@ public class CreateLogHandlerImpl implements CreateLogHandler {
 		final Log log = logBuilder.get();
 		log.setId(logRepository.getNextId());
 
-		runAsync(() -> logRepository.save(log), taskExecutor);
-		runAsync(() -> logService.saveLogMessageToElasticSearch(log), taskExecutor);
+		logRepository.save(log);
+		logService.saveLogMessageToElasticSearch(log);
 
 		ofNullable(file).ifPresent(f -> saveBinaryData(f, launch, log));
 
