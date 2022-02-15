@@ -46,6 +46,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 import static java.util.Optional.ofNullable;
+import static java.util.concurrent.CompletableFuture.runAsync;
 
 /**
  * Create log handler. Save log and binary data related to it
@@ -103,8 +104,10 @@ public class CreateLogHandlerImpl implements CreateLogHandler {
 		}).orElseThrow(() -> new ReportPortalException(ErrorType.LAUNCH_NOT_FOUND, request.getLaunchUuid())));
 
 		final Log log = logBuilder.get();
-		logRepository.save(log);
-		logService.saveLogMessageToElasticSearch(log);
+		log.setId(logRepository.getNextId());
+
+		runAsync(() -> logRepository.save(log), taskExecutor);
+		runAsync(() -> logService.saveLogMessageToElasticSearch(log), taskExecutor);
 
 		ofNullable(file).ifPresent(f -> saveBinaryData(f, launch, log));
 

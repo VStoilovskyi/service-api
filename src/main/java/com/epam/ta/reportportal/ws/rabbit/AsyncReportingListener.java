@@ -57,6 +57,7 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.task.TaskExecutor;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -67,6 +68,7 @@ import java.util.Optional;
 
 import static com.epam.ta.reportportal.commons.EntityUtils.normalizeId;
 import static com.epam.ta.reportportal.core.configs.rabbit.ReportingConfiguration.*;
+import static java.util.concurrent.CompletableFuture.*;
 
 /**
  * @author Konstantin Antipin
@@ -116,6 +118,10 @@ public class AsyncReportingListener implements MessageListener {
 
 	@Autowired
 	private LogService logService;
+
+	@Autowired
+	@Qualifier("asyncReportingTaskExecutor")
+	private TaskExecutor taskExecutor;
 
 	@Override
 	@RabbitMessageLogging
@@ -291,8 +297,10 @@ public class AsyncReportingListener implements MessageListener {
 
 	private void createItemLog(SaveLogRQ request, TestItem item, BinaryDataMetaInfo metaInfo, Long projectId) {
 		Log log = new LogBuilder().addSaveLogRq(request).addTestItem(item).addProjectId(projectId).get();
-		logRepository.save(log);
-		logService.saveLogMessageToElasticSearch(log);
+		log.setId(logRepository.getNextId());
+
+		runAsync(() -> logRepository.save(log), taskExecutor);
+		runAsync(() -> logService.saveLogMessageToElasticSearch(log), taskExecutor);
 
 		Launch effectiveLaunch = testItemService.getEffectiveLaunch(item);
 		saveAttachment(metaInfo,
@@ -307,8 +315,10 @@ public class AsyncReportingListener implements MessageListener {
 
 	private void createLaunchLog(SaveLogRQ request, Launch launch, BinaryDataMetaInfo metaInfo, Long projectId) {
 		Log log = new LogBuilder().addSaveLogRq(request).addLaunch(launch).addProjectId(projectId).get();
-		logRepository.save(log);
-		logService.saveLogMessageToElasticSearch(log);
+		log.setId(logRepository.getNextId());
+
+		runAsync(() -> logRepository.save(log), taskExecutor);
+		runAsync(() -> logService.saveLogMessageToElasticSearch(log), taskExecutor);
 
 		saveAttachment(metaInfo, log.getId(), projectId, launch.getId(), null, launch.getUuid(), log.getUuid());
 	}

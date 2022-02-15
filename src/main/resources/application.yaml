@@ -110,6 +110,10 @@ rp:
             core: 10
             max: 20
             queue: 1000
+          async-reporting:
+            core: 10
+            max: 20
+            queue: 1000
 
   amqp:
     addresses: amqp://${rp.amqp.user}:${rp.amqp.pass}@${rp.amqp.host}:${rp.amqp.port}

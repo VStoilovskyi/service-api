@@ -66,6 +66,20 @@ public class ExecutorConfiguration {
 		return executor;
 	}
 
+	@Bean(name = "asyncReportingTaskExecutor")
+	public TaskExecutor asyncReportingTaskExecutor(@Value("${rp.environment.variable.executor.pool.async-reporting.core}") Integer corePoolSize,
+			@Value("${rp.environment.variable.executor.pool.async-reporting.max}") Integer maxPoolSize,
+			@Value("${rp.environment.variable.executor.pool.async-reporting.queue}") Integer queueCapacity) {
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(corePoolSize);
+		executor.setMaxPoolSize(maxPoolSize);
+		executor.setQueueCapacity(queueCapacity);
+		executor.setAllowCoreThreadTimeOut(true);
+		executor.setThreadNamePrefix("async-reporting-task-exec");
+		executor.setRejectedExecutionHandler(new java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy());
+		return executor;
+	}
+
 	@Bean
 	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 	public SaveLogBinaryDataTask saveLogBinaryDataTask() {
