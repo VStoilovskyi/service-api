@@ -190,4 +190,16 @@ public class ExecutorConfiguration {
 		return threadPoolTaskExecutor;
 	}
 
+	@Bean(name = "newSaveLogsTaskExecutor")
+	public TaskExecutor newSaveLogsTaskExecutor() {
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(200);
+		executor.setMaxPoolSize(500);
+		executor.setQueueCapacity(10000);
+		executor.setAllowCoreThreadTimeOut(true);
+		executor.setThreadNamePrefix("new-logs-task-exec");
+		executor.setRejectedExecutionHandler(new java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy());
+		return executor;
+	}
+
 }

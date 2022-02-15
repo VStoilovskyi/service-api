@@ -87,6 +87,10 @@ public class CreateLogHandlerImpl implements CreateLogHandler {
 	@Qualifier("saveLogsTaskExecutor")
 	private TaskExecutor taskExecutor;
 
+	@Autowired
+	@Qualifier("newSaveLogsTaskExecutor")
+	private TaskExecutor newTaskExecutor;
+
 	@Override
 	@Nonnull
 	//TODO check saving an attachment of the item of the project A in the project's B directory
@@ -106,8 +110,8 @@ public class CreateLogHandlerImpl implements CreateLogHandler {
 		final Log log = logBuilder.get();
 		log.setId(logRepository.getNextId());
 
-		taskExecutor.execute(() -> logRepository.save(log));
-		taskExecutor.execute(() -> logService.saveLogMessageToElasticSearch(log));
+		newTaskExecutor.execute(() -> logService.saveLogMessageToElasticSearch(log));
+		newTaskExecutor.execute(() -> logRepository.save(log));
 
 		ofNullable(file).ifPresent(f -> saveBinaryData(f, launch, log));
 
