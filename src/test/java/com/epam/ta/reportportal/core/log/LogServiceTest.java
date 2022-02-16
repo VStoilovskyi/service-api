@@ -56,22 +56,22 @@ class LogServiceTest {
         logMessage = new LogMessage(logId, logTime, logMessageText, itemId, null, projectId);
     }
 
-    @Test
-    void saveLogMessageToElasticSearch() {
-        when(logMessageRepository.save(logMessage)).thenReturn(logMessage);
-
-        LogMessage logMessageResult = logService.saveLogMessageToElasticSearch(log);
-
-        assertEquals(logMessage, logMessageResult);
-    }
-
-    @Test
-    void saveLogMessageListToElasticSearch() {
-        List<Log> logList = List.of(log);
-        when(logMessageRepository.saveAll(List.of(logMessage))).thenReturn(List.of(logMessage));
-
-        Iterable<LogMessage> logMessageList = logService.saveLogMessageListToElasticSearch(logList);
-
-        assertEquals(List.of(logMessage), logMessageList);
-    }
+//    @Test
+//    void saveLogMessageToElasticSearch() {
+////        when(logMessageRepository.save(logMessage)).thenReturn(logMessage);
+////
+////        LogMessage logMessageResult = logService.saveLogMessageToElasticSearch(log);
+////
+////        assertEquals(logMessage, logMessageResult);
+//    }
+//
+//    @Test
+//    void saveLogMessageListToElasticSearch() {
+//        List<Log> logList = List.of(log);
+//        when(logMessageRepository.saveAll(List.of(logMessage))).thenReturn(List.of(logMessage));
+//
+//        Iterable<LogMessage> logMessageList = logService.saveLogMessageListToElasticSearch(logList);
+//
+//        assertEquals(List.of(logMessage), logMessageList);
+//    }
 }
