@@ -20,15 +20,17 @@ public class LogService {
     }
 
     public LogMessage saveLogMessageToElasticSearch(Log log) {
-        if (Objects.isNull(log)) return null;
-        return logMessageRepository.save(convertLogToLogMessage(log));
+        return null;
+//        if (Objects.isNull(log)) return null;
+//        return logMessageRepository.save(convertLogToLogMessage(log));
     }
 
     public Iterable<LogMessage> saveLogMessageListToElasticSearch(List<Log> logList) {
-        if (CollectionUtils.isEmpty(logList)) return null;
-        List<LogMessage> logMessageList = new ArrayList<>(logList.size());
-        logList.stream().filter(Objects::nonNull).forEach(log -> logMessageList.add(convertLogToLogMessage(log)));
-        return logMessageRepository.saveAll(logMessageList);
+        return null;
+//        if (CollectionUtils.isEmpty(logList)) return null;
+//        List<LogMessage> logMessageList = new ArrayList<>(logList.size());
+//        logList.stream().filter(Objects::nonNull).forEach(log -> logMessageList.add(convertLogToLogMessage(log)));
+//        return logMessageRepository.saveAll(logMessageList);
     }
 
     private LogMessage convertLogToLogMessage(Log log) {
