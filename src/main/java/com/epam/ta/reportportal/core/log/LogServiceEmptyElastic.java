@@ -13,9 +13,13 @@ public class LogServiceEmptyElastic implements LogService {
     public LogServiceEmptyElastic() {
     }
 
-    public void saveLogMessageToElasticSearch(Log log) {
+    @Override
+    public void saveLogMessageToElasticSearch(Log log, Long launchId) {
+
     }
 
-    public void saveLogMessageListToElasticSearch(List<Log> logList) {
+    @Override
+    public void saveLogMessageListToElasticSearch(List<Log> logList, Long launchId) {
+
     }
 }
