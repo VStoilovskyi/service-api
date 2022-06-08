@@ -44,7 +44,7 @@ public class PagingHandlerMethodArgumentResolver extends org.springframework.dat
 	}
 
 	public static final int DEFAULT_PAGE_SIZE = 50;
-	public static final int MAX_PAGE_SIZE = 300;
+	public static final int MAX_PAGE_SIZE = 300000;
 
 	@Override
 	@Nonnull
